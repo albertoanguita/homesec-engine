@@ -1,0 +1,22 @@
+﻿{
+  "admins": [
+    {
+      "name": "Alberto",
+      "email": "alberto.anguita@gmail.com"
+    }
+  ],
+  "users": [
+    {
+      "name": "Iker"
+    },
+    {
+      "name": "Noelia"
+    },
+    {
+      "name": "mamá"
+    },
+    {
+      "name": "papá"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+@homesec_engine_HostAddress = http://localhost:5091
+
+GET {{homesec_engine_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
