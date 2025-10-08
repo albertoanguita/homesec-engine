@@ -1,5 +1,6 @@
 using TestWebAPI1;
 using TestWebAPI1.users;
+using TestWebAPI1.util.filestore;
 using TestWebAPI1.util.genericstore;
 using TestWebAPI1.util.genericstore.binders;
 
@@ -66,7 +67,24 @@ Configuration.SetConfig(config);
 var instance = UserManager.GetInstance();
 
 
+
+
 var connectionStr = "Server=127.0.0.1;Port=3307;Database=test;User=root;Password=my-secret-pw;";
+
+
+var dbFileStore = new DbFileStore(connectionStr, "FileStore");
+
+var ba = new byte[] { 0, 1, 2, 3 };
+
+var exists = dbFileStore.Exists("path");
+dbFileStore.Write("path", ba);
+exists = dbFileStore.Exists("path");
+var size = dbFileStore.Size("path");
+var copy = dbFileStore.Read("path");
+dbFileStore.Delete("path");
+exists = dbFileStore.Exists("path");
+
+
 
 var sqlBinder = new SqlBinder(connectionStr, "GenericStore");
 

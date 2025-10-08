@@ -35,7 +35,6 @@ public class DbFileStore
         public required byte[] Data { get; set; }
     }
     
-    private const string _id = nameof(FileStoreEntity.Id);
     private const string _path = nameof(FileStoreEntity.Path);
     private const string _size = nameof(FileStoreEntity.Size);
     private const string _data = nameof(FileStoreEntity.Data);
@@ -143,24 +142,24 @@ public class DbFileStore
         return (dirs, fileName);
     }
 
-    private FileStoreEntity? Load(string path)
+    public byte[]? Read(string path)
     {
         using var con = new MySqlConnection(_connectionString);
         con.Open();
         var sql = $"SELECT * FROM {_table} WHERE {_path} = @path";
         var file = con.QueryFirstOrDefault<FileStoreEntity>(sql, new { path });
-        return file;
+        return file?.Data;
     }
 
-    private void Save(string path, byte[] data)
+    public void Write(string path, byte[] data)
     {
         using var con = new MySqlConnection(_connectionString);
         con.Open();
         con.Execute($"INSERT INTO {_table}({_path}, {_size}, {_data}) values (@path, @size, @data)", 
-                new { path, data.Length, data });
+                new { path, size = data.Length, data });
     }
 
-    private ulong? Size(string path)
+    public ulong? Size(string path)
     {
         using var con = new MySqlConnection(_connectionString);
         con.Open();
@@ -169,12 +168,12 @@ public class DbFileStore
         return size;
     }
 
-    private bool Exists(string path)
+    public bool Exists(string path)
     {
         return Size(path).HasValue;
     }
 
-    private void Delete(string path)
+    public void Delete(string path)
     {
         using var con = new MySqlConnection(_connectionString);
         con.Open();
