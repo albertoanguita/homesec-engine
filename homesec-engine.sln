@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "homesec-engine", "homesec-engine\homesec-engine.csproj", "{26AE85B5-2418-463D-BEC8-66F4BD9D6F4F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteLogger", "RemoteLogger\RemoteLogger.csproj", "{A35EF8FF-0F9D-40FF-BF52-72D5E72F2D95}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{26AE85B5-2418-463D-BEC8-66F4BD9D6F4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26AE85B5-2418-463D-BEC8-66F4BD9D6F4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26AE85B5-2418-463D-BEC8-66F4BD9D6F4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A35EF8FF-0F9D-40FF-BF52-72D5E72F2D95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A35EF8FF-0F9D-40FF-BF52-72D5E72F2D95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A35EF8FF-0F9D-40FF-BF52-72D5E72F2D95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A35EF8FF-0F9D-40FF-BF52-72D5E72F2D95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

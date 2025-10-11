@@ -45,13 +45,13 @@ public class SqlStoreEntity
 
 public class SqlBinder : GenericStoreBinder
 {
-    private string _connectionString;
-    private string _table;
+    private readonly string _connectionString;
+    private readonly string _table;
     
-    private const string _id = nameof(binders.SqlStoreEntity.Id);
-    private const string _group = nameof(binders.SqlStoreEntity.Group_);
-    private const string _name = nameof(binders.SqlStoreEntity.Name);
-    private const string _type = nameof(binders.SqlStoreEntity.Type_);
+    private const string Id = nameof(binders.SqlStoreEntity.Id);
+    private const string Group = nameof(binders.SqlStoreEntity.Group_);
+    private const string Name = nameof(binders.SqlStoreEntity.Name);
+    private const string Type = nameof(binders.SqlStoreEntity.Type_);
 
     public SqlBinder(string connectionString, string table)
     {
@@ -63,7 +63,7 @@ public class SqlBinder : GenericStoreBinder
     {
         using var con = new MySqlConnection(_connectionString);
         con.Open();
-        var sql = $"SELECT * FROM {_table} WHERE {_group} = @group AND {_name} = @name";
+        var sql = $"SELECT * FROM {_table} WHERE {Group} = @group AND {Name} = @name";
         var variable = con.QueryFirstOrDefault<SqlStoreEntity>(sql, new { group, name });
         return variable;
     }
@@ -80,7 +80,7 @@ public class SqlBinder : GenericStoreBinder
             // variable already exists
             if (variable.Type_ == type)
             {
-                var sql = $"UPDATE {_table} SET {column} = @value WHERE {_id} = @id";
+                var sql = $"UPDATE {_table} SET {column} = @value WHERE {Id} = @id";
                 con.Execute(sql, new { value, id = variable.Id });
             }
             else
@@ -92,7 +92,7 @@ public class SqlBinder : GenericStoreBinder
         else
         {
             // variable does not exist
-            con.Execute($"INSERT INTO {_table}({_group}, {_name}, {_type}, {column}) values (@group, @name, @type, @value)", 
+            con.Execute($"INSERT INTO {_table}({Group}, {Name}, {Type}, {column}) values (@group, @name, @type, @value)", 
                 new { group, name, type, value });
         }
     }
@@ -167,7 +167,7 @@ public class SqlBinder : GenericStoreBinder
     {
         using var con = new MySqlConnection(_connectionString);
         con.Open();
-        var sql = $"SELECT DISTINCT {_group} FROM {_table}";
+        var sql = $"SELECT DISTINCT {Group} FROM {_table}";
         var groups = con.Query<string>(sql);
         return groups.ToList();
     }
@@ -176,7 +176,7 @@ public class SqlBinder : GenericStoreBinder
     {
         using var con = new MySqlConnection(_connectionString);
         con.Open();
-        var sql = $"SELECT {_name}, {_type} FROM {_table} WHERE {group} = @group";
+        var sql = $"SELECT {Name}, {Type} FROM {_table} WHERE {group} = @group";
         var groupVariables = con.Query<(string, GenericStoreType)>(sql, new { group });
         return groupVariables.ToList();
     }
@@ -185,7 +185,7 @@ public class SqlBinder : GenericStoreBinder
     {
         using var con = new MySqlConnection(_connectionString);
         con.Open();
-        var sql = $"DELETE FROM {_table} WHERE {_group} = @group AND {_name} = @name";		
+        var sql = $"DELETE FROM {_table} WHERE {Group} = @group AND {Name} = @name";		
         con.Execute(sql, new { group, name });
     }
 
@@ -193,7 +193,7 @@ public class SqlBinder : GenericStoreBinder
     {
         using var con = new MySqlConnection(_connectionString);
         con.Open();
-        var sql = $"DELETE FROM {_table} WHERE {_group} = @group";		
+        var sql = $"DELETE FROM {_table} WHERE {Group} = @group";		
         con.Execute(sql, new { group });
     }
 }

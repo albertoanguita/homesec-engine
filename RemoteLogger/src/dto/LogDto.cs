@@ -1,0 +1,52 @@
+﻿namespace RemoteLogger.dto;
+
+public class LogDto
+{
+    public long Timestamp { get; set; }
+
+    public string? System { get; set; }
+    
+    public string? Module { get; set; }
+    
+    public required string Message { get; set; }
+
+    public override string ToString()
+    {
+        return $"{nameof(Timestamp)}: {Timestamp}, {nameof(System)}: {System}, {nameof(Module)}: {Module}, {nameof(Message)}: {Message}";
+    }
+}
+
+public class LogQueryDto
+{
+    public string? System { get; set; }
+    
+    public string? Module { get; set; }
+    
+    public string? Message { get; set; }
+    
+    public long? From { get; set; }
+    
+    public long? To { get; set; }
+    
+    public int? Limit { get; set; }
+    
+    public int? Offset { get; set; }
+    
+    public bool? Asc { get; set; }
+}
+
+public class LogResponseDto
+{
+    public long Timestamp { get; set; }
+
+    public required string System { get; set; }
+    
+    public required string Module { get; set; }
+    
+    public required string Message { get; set; }
+
+    public override string ToString()
+    {
+        return $"{nameof(Timestamp)}: {Timestamp}, {nameof(System)}: {System}, {nameof(Module)}: {Module}, {nameof(Message)}: {Message}";
+    }
+}
