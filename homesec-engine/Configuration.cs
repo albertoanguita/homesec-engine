@@ -50,9 +50,19 @@ public class SensorsApi
         return _sensorsApi.GetValue<string>("BasePath")!;
     }
 
+    public string State()
+    {
+        return _sensorsApi.GetValue<string>("State")!;
+    }
+
     public string Command()
     {
         return _sensorsApi.GetValue<string>("Command")!;
+    }
+
+    public string SetCallbackUrl()
+    {
+        return _sensorsApi.GetValue<string>("SetCallbackUrl")!;
     }
 }
 

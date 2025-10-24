@@ -1,4 +1,5 @@
 ﻿using TestWebAPI1.logger;
+using TestWebAPI1.sensors;
 
 namespace TestWebAPI1.manager;
 
@@ -29,9 +30,26 @@ public class SecurityEngine
         // initialize: set callback api, read config
         Logger.Info("Initializing...");
         _engineState = EngineState.Init;
-        // todo initialize sensors engine, set callback. Use retry system to let it start up
+        SensorsBridge.SetCallbackUrl("callback").Wait();
         _engineState = EngineState.Off;
         Logger.Info("Engine state set to Off. Initialization complete");
+    }
+
+    private async Task Initialize()
+    {
+        var success = false;
+        while (!success)
+        {
+            success = await SensorsBridge.SetCallbackUrl("callback");
+
+            if (!success)
+            {
+                _engineState = EngineState.BadInitialization;
+                Logger.Warn("Failed to set callback url");
+                await Task.Delay(5000);
+            }
+        }
+        Logger.Warn("Callback url set successfully");
     }
 
     public void KnownPersonDetected()

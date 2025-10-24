@@ -13,6 +13,7 @@ public class Logger
         public NamedLogger(string name)
         {
             _name = name;
+            _logger = GetInstance();
         }
         
         public void Trace(string message)

@@ -3,6 +3,7 @@
 public enum EngineState
 {
     Init,
+    BadInitialization,
     Off,
     Arming,
     Armed,

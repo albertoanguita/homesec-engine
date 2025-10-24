@@ -1,4 +1,6 @@
 using TestWebAPI1;
+using TestWebAPI1.logger;
+using TestWebAPI1.manager;
 using TestWebAPI1.users;
 using TestWebAPI1.util.filestore;
 using TestWebAPI1.util.genericstore;
@@ -13,11 +15,18 @@ builder.Services.AddControllers();
 //builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// builder.Logging.ClearProviders();
+builder.Logging.AddRemoteLogger(options =>
+{
+    // options.Url = "YOUR CONNETION STRING GOES HERE";
+});
 
-
-using ILoggerFactory factory = LoggerFactory.Create(builder => builder.AddConsole());
+/*using ILoggerFactory factory = LoggerFactory.Create(builder => builder.AddConsole());
 ILogger logger = factory.CreateLogger("Program");
-logger.LogInformation("Hello World! Logging is {Description}.", "fun");
+logger.LogInformation("Hello World! Logging is {Description}.", "fun");*/
+
+
+
 
 HttpClient client = new HttpClient();
 string url = "http://localhost:5501";
@@ -42,6 +51,14 @@ Console.WriteLine(responseBody);*/
 
 var app = builder.Build();
 
+var logger2 = app.Services.GetRequiredService<ILogger<Program>>();
+
+logger2.LogWarning("Hello World! Logging is {Description}.", "fun2");
+logger2.LogInformation("Hello World! Logging is {Description}.", "fun2");
+logger2.LogDebug("Hello World! Logging is {Description}.", "fun2");
+
+
+Task.Delay(5000).Wait();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -66,7 +83,7 @@ Configuration.SetConfig(config);
 
 var instance = UserManager.GetInstance();
 
-
+SecurityEngine.GetInstance();
 
 
 var connectionStr = "Server=127.0.0.1;Port=3307;Database=test;User=root;Password=my-secret-pw;";

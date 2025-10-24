@@ -1,4 +1,6 @@
-﻿namespace TestWebAPI1.sensors.dtos;
+﻿using System.Text.Json.Serialization;
+
+namespace TestWebAPI1.sensors.dtos;
 
 public enum Command
 {
@@ -9,6 +11,18 @@ public enum Command
 
 public class CommandDto
 {
-    // todo uppercase but lowercase in json
-    public required string command { get; set; }
+    [JsonPropertyName("command")]
+    public required string Command { get; set; }
+}
+
+public class SetCallbackUrlDto
+{
+    [JsonPropertyName("url")]
+    public required string Url { get; set; }
+}
+
+public class SetCallbackUrlResponseDto
+{
+    [JsonPropertyName("success")]
+    public required bool Success { get; set; }
 }
