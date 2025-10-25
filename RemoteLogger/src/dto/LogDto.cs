@@ -13,7 +13,7 @@ public class LogDto : SecuredDto
     
     public string? Module { get; set; }
     
-    public string? LogLevel { get; set; }
+    public sbyte? LogLevel { get; set; }
     
     public required string Message { get; set; }
 
@@ -28,6 +28,8 @@ public class LogQueryDto : SecuredDto
     public string? System { get; set; }
     
     public string? Module { get; set; }
+    
+    public int? LogLevel { get; set; }
     
     public string? Message { get; set; }
     

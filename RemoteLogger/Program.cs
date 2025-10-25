@@ -3,6 +3,8 @@ using RemoteLogger.dto;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// docker build -f Dockerfile -t remote-logger:v1 ..
+
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -32,16 +34,12 @@ app.UseHttpsRedirection();
 // todo initialize. Check DB connection and table. Set state
 
 
-
+// todo to config
 var connectionStr = "Server=127.0.0.1;Port=3307;Database=test;User=root;Password=my-secret-pw;";
 var dbWrapper = new DbWrapper(connectionStr, "RemoteLog");
 
 
-app.MapGet("/status", () =>
-{
-    return "Ok";
-});
-
+app.MapGet("/status", () => "Ok");
 
 
 app.MapPost("/log", IResult (LogDto logDto) =>
@@ -86,9 +84,9 @@ bool CheckAuthorization(SecuredDto dto)
 
 LogDto ValidateLogDto(LogDto logDto)
 {
-    // todo from config
-    logDto.System ??= "UNKNOWN";
-    logDto.Module ??= "UNKNOWN";
+    logDto.System ??= string.Empty;
+    logDto.Module ??= string.Empty;
+    logDto.LogLevel ??= -1;
     return logDto;
 }
 

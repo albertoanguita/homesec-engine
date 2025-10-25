@@ -59,6 +59,9 @@ public class DbWrapper
         if (query.Module != null)
             where.Add($"{ModuleCol} = @module");
         
+        if (query.LogLevel != null)
+            where.Add($"{LogLevelCol} >= @loglevel");
+        
         if (query.Message != null)
             where.Add($"{MessageCol} LIKE @message");
         
@@ -85,6 +88,7 @@ public class DbWrapper
             {
                 system = query.System, 
                 module = query.Module, 
+                loglevel = query.LogLevel,
                 message = $"%{query.Message}%", 
                 from = query.From, 
                 to = query.To,
