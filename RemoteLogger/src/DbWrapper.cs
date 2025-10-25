@@ -17,6 +17,7 @@ public class DbWrapper
         public long Timestamp { get; set; }
         public required string System { get; set; }
         public required string Module { get; set; }
+        public required string LogLevel { get; set; }
         public required string Message { get; set; }
     }
     
@@ -26,6 +27,7 @@ public class DbWrapper
     private const string TimestampCol = nameof(LogEntity.Timestamp);
     private const string SystemCol = nameof(LogEntity.System);
     private const string ModuleCol = nameof(LogEntity.Module);
+    private const string LogLevelCol = nameof(LogEntity.LogLevel);
     private const string MessageCol = nameof(LogEntity.Message);
 
     public DbWrapper(string connectionString, string table)
@@ -39,8 +41,8 @@ public class DbWrapper
         using var con = new MySqlConnection(_connectionString);
         con.Open();
 
-        var res = con.Execute($"INSERT INTO {_table}({TimestampCol}, {SystemCol}, {ModuleCol}, {MessageCol}) values (@timestamp, @system, @module, @message)", 
-            new { timestamp = log.Timestamp, system = log.System, module = log.Module, message = log.Message });
+        var res = con.Execute($"INSERT INTO {_table}({TimestampCol}, {SystemCol}, {ModuleCol}, {LogLevelCol}, {MessageCol}) values (@timestamp, @system, @module, @logLevel, @message)", 
+            new { timestamp = log.Timestamp, system = log.System, module = log.Module, logLevel = log.LogLevel, message = log.Message });
         
         return res > 0;
     }

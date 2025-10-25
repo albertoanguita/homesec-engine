@@ -1,4 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Net.Mime;
+using System.Text;
+using System.Text.Json;
+using TestWebAPI1.util;
 
 namespace TestWebAPI1.logger;
 
@@ -31,6 +35,34 @@ public class RemoteLogger(
         // todo invoke
         // todo use queue system to avoid blocking the log writing
         // todo send log to URL
-        Console.WriteLine($"{logLevel}: {message} to {getCurrentConfig().Url}");
+        Console.WriteLine($"{logLevel}: {message} to {getCurrentConfig().Url}:{getCurrentConfig().Port}");
+
+
+
+        /*var dto = new
+        {
+            Auth = getCurrentConfig().AuthHeader,
+            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
+            System = getCurrentConfig().SystemName,
+            Module = name,
+            LogLevel = logLevel.ToString(),
+            Message = message
+        };
+        var url = RestHelper.BuildUrl(getCurrentConfig().Url, getCurrentConfig().Port, "log");
+        
+        var body = JsonSerializer.Serialize(dto);
+        
+        HttpContent content = new StringContent(body, Encoding.UTF8, MediaTypeNames.Application.Json);
+        var client = new HttpClient();
+        var response = await client.PostAsync(url, content);
+        try
+        {
+            response.EnsureSuccessStatusCode();
+            return true;
+        }
+        catch (Exception e)
+        {
+            return false;
+        }*/
     }
 }

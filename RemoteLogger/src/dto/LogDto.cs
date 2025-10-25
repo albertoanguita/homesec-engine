@@ -1,6 +1,11 @@
 ﻿namespace RemoteLogger.dto;
 
-public class LogDto
+public class SecuredDto
+{
+    public required string Auth { get; set; }
+}
+
+public class LogDto : SecuredDto
 {
     public long Timestamp { get; set; }
 
@@ -8,15 +13,17 @@ public class LogDto
     
     public string? Module { get; set; }
     
+    public string? LogLevel { get; set; }
+    
     public required string Message { get; set; }
 
     public override string ToString()
     {
-        return $"{nameof(Timestamp)}: {Timestamp}, {nameof(System)}: {System}, {nameof(Module)}: {Module}, {nameof(Message)}: {Message}";
+        return $"{nameof(Timestamp)}: {Timestamp}, {nameof(System)}: {System}, {nameof(Module)}: {Module}, {nameof(LogLevel)}: {LogLevel}, {nameof(Message)}: {Message}";
     }
 }
 
-public class LogQueryDto
+public class LogQueryDto : SecuredDto
 {
     public string? System { get; set; }
     
