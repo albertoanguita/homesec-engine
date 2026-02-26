@@ -30,7 +30,6 @@ public class RemoteLogger(
         }
         
         string message = formatter(state, exception);
-        int lg = (int)logLevel;
         
         // todo invoke
         // todo use queue system to avoid blocking the log writing
@@ -39,30 +38,29 @@ public class RemoteLogger(
 
 
 
-        /*var dto = new
+        var dto = new
         {
             Auth = getCurrentConfig().AuthHeader,
             Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(),
             System = getCurrentConfig().SystemName,
             Module = name,
-            LogLevel = logLevel.ToString(),
+            LogLevel = (int) logLevel,
             Message = message
         };
-        var url = RestHelper.BuildUrl(getCurrentConfig().Url, getCurrentConfig().Port, "log");
+        var url = RestHelper.BuildUrl(getCurrentConfig().Url, getCurrentConfig().Port, "/log");
         
         var body = JsonSerializer.Serialize(dto);
         
         HttpContent content = new StringContent(body, Encoding.UTF8, MediaTypeNames.Application.Json);
         var client = new HttpClient();
-        var response = await client.PostAsync(url, content);
+        var response = client.PostAsync(url, content).Result;
         try
         {
             response.EnsureSuccessStatusCode();
-            return true;
         }
         catch (Exception e)
         {
-            return false;
-        }*/
+            Console.WriteLine(e);
+        }
     }
 }
